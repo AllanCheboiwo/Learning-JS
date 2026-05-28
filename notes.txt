@@ -1,0 +1,802 @@
+
+------------
+TYPES IN JS
+------------
+    number
+    string
+    boolean
+    NaN
+    null
+    undefined
+    BigInt
+    symbol
+
+typeof var: returns string showing type of var
+
+
+---------------------------------
+Interact with user on browser
+--------------------------------
+    -alert("msg")
+    -prompt("sth",[defaultvalue]) , returns value users enter
+    -confirm("msg") returns true or false based on if user clicks true or false
+
+
+--------------------------------
+String conversion
+--------------------------------
+    -implicit or explicit(func to use String())
+
+--------------------
+Number conversion   
+--------------------
+
+    -implcit or explicit(Number()), can alos put plus infornt of variable and it would do the same job eg +"2" = 2
+    -Number(value) for undefined vals->NaN, null -> 0 , true or false -> 1,0, string-> 0 if empty after space removed or NaN if not number
+
+boolean 
+    -Boolean() False for NaN, undefined, 0 ,"",null and true for non empty strings eg "0", " "and othet values
+
+--------------------
+MATH OPERATORS
+--------------------
+Unary operator - has a single operand eg x = -x, negation
+binary operator - two operands eg 3-2
+Division - / , remainder - % , Exponentiation -  **
+
+string concat possible with + operator, one string one not the not string will be converted to string before concat
+
+(1+'2'+'2') = '122'
+
+only operator that supports strings is +
+
+------------------------------
+operator precedence
+------------------------------
+unary operators have higher precedence than binary operators, = is one of the lowest
+assignment i slike c x=value returns value, a=b=c=4  a=4,b=4, c=4
+
+------------------------------------------
+BITWISE OPERATORS
+------------------------------------------
+AND(&)
+OR(|)
+XOR(^)
+NOT(~)
+left shift(<<)
+right shift(>>)
+ZERO-FILL RIGH SHIFT(>>>)
+
+----------------
+comas
+----------------
+a = (1+4,5+6) results in a= 7 , it discards one of the values
+used for stuff like whe.n you want to do alot of ops in one line
+
+example:
+for (a = 1, b = 3, c = a * b; a < 10; a++) {
+ ...
+}
+
+----------------------
+comparison
+----------------------
+
+Comparison operators return a boolean value.
+Strings are compared letter-by-letter in the “dictionary” order.
+When values of different types are compared, they get converted to numbers (with the exclusion of a strict equality check).
+The values null and undefined are equal == to themselves and each other, but do not equal any other value.
+Be careful when using comparisons like > or < with variables that can occasionally be null/undefined. Checking for null/undefined separately is a good idea.
+
+
+|| -> or && and
+
+if(){}else if(){}else{}
+
+const c  = (condition)? true: false;
+
+-----------------------------------------
+nullish coalescing operator(??)
+---------------------------------------
+const c = a ?? b; // if is undefined or null you get b assigned to c. used for default values
+different from || in that || treats "",0,false as all falsy values when they could be legit values for the usecase
+same precedence as ||
+for safety ?? is prohibited from being used with || and && unless order is indicated by parentheses
+let x = 1 && 2 ?? 3; //does not work
+let x = (1&&2)??3; works
+
+assign in place : d??=10; can do that for 
+
+----------------------
+Looping
+----------------------
+while(conditon){}
+for(let i = 0;i<5;i++){
+
+}
+do{}while(condition);
+
+for(begin;condition;step){} // for(;condition;step){} // for(;condition;){} //for{;;}{}
+break->exit Looping
+continue->move to next iteration
+To break out of nested loops use labels. Example below
+outer:
+for(...){
+    for(...){
+        if(condition)
+            break outer;
+    }
+}
+for(...){
+    outer2:
+    for(...){
+        if(condition)
+            continue outer2;
+    }
+}
+
+
+
+----------
+switch
+-----------
+uses strict equality;
+switch(a){
+    case 1:
+        break;
+    case 2:
+    case 3:
+        break;
+    default:
+        break;
+}
+
+
+
+----------------
+functions
+---------------
+function myFunction(name,age,gender = "Female"){
+    //function body
+}
+-the arguments passed to the function are copies, so you dont modify original values passed
+-variables defined within the function are only accessible within the function, the function access global vars, or above it if nested
+- if we dont pass arguments and their is no default values and the function actually had parameters we get undefined
+- if we pass undefined as an argument for a parameter with a default value you will get the default value
+- for return if return value is empty it will return undefined, same for when you dont even specify the return
+-return value must be in same line as return or atleast start at that line
+-function names should start with verb indicating action it does, try to keep it shot
+-also try to have separate functions for each action
+-avoid big functions
+
+
+-----------------------
+function expressions
+-----------------------
+
+    let sayHi = function(){
+        alert("Hello!");
+    };
+
+same as:
+    function sayHi(){
+        alert("Hello");
+    }
+difference is function expression can only be used after execution while function declarations can be used anywhere if they are global since they are initialized before script is executed
+
+let sayHi = function(){
+    alert("Hello!");
+};
+
+alert(sayHi);//output will be source code which is a string
+
+let tanHi = sayHi; this will work tanHi();
+
+- if a function declaration is not global it is hoisted at the block it is declared(can use before declartion line is reached)
+-use function expression when maybe functiion to be defined is conditional to sth otherwise use function declaration
+
+-------------------
+callback functions
+-------------------
+
+function agreeWithMessage(message,sayYes,sayNo){
+    if(confirm(message)) sayYes();
+    else sayNo();
+}
+
+function sayYes(){
+    alert("You agree with the message");
+}
+
+function SayNo(){
+    alert("You dont agree with the message")
+}
+
+sayYes is the callback function if the user agrees with the message otherwise sayNo is
+---------------------
+anonymous functions
+--------------------
+agreeWithMessage(confirm("Chelsea is the best football club!"),
+        function(){alert("You agree with the message")},
+        function(){alert("You disagree with the message")}
+
+);
+- the above functions are anonymous and are only used where they are declared , dont have a var for it so it is lost
+
+
+--------------
+arrow-functions
+---------------
+
+let sum = (a,b) => a+b; // two arguments and it returns the result of a+based
+let doubleNum = a => a*2;
+
+let printName = name =>{
+    alert(name);
+}; // you to have explicit return if you want one!!;
+
+
+
+
+-------------------
+Automated tests
+-------------------
+
+can be done use mocha -core framework, chai -library with different asserts, sinon - spy over functions, can emulate builtin functions
+
+BDD - Behaviour Driven Development
+
+- Write the specs and then implement it. Modify specs , run it to see if tests pass, if fial modify implementation. Iterative
+-the specs do: i)tests - make sure code does well 2)document using decsribe and it, it tells what the function does 3)examples - test are working examples
+
+
+---------------------------
+transpilers and polyfills
+--------------------------
+
+transpilers - translate source code to another source code. In this case modern js syntax and operators not supported but old browsers to a form they understand
+run your code through traspiler to make sure it works on all platforms. EXample is babel
+polyfills - add modern builtin functions(new functions) not found in old js versions. basically adds a script of its implementation. example core-js
+
+webpack - build system that trasnpiles for every code change
+
+
+--------------
+Objects
+-------------
+has zero or more properties seprated by comas
+properties-> key: value
+- let user = {}, let user = new Object();, let user = {name: "Allan",age: 10,}, user.isAdmin = true(adds this property to user object)
+- spaced string have to be put in quotes if they are used as keys eg {"first name": "Allan"}
+- Accessing: user.name or user[name]. User user[key] for spaced string(not valid variable name)
+- user[key] pattern allows you to set key,compute before using eg prompitn g user for what data they want and received the key the want and using it
+
+computer properties
+----------------------
+- let fruit = prompt("What fruit are you going to buy?","apple");
+- let bag = {[fruit]:5};//[fruit] sya we want to use fruit as property name
+- alternatively you could do: let bag = {}; bag[fruit] = 5;
+- brackets way allow you to do complex operations eg bag[fruit+'Computer']
+
+property value shorthand
+-------------------------
+
+function makeExample(name, age) {
+    return {
+        name: name,
+        age: age,
+    };
+}
+
+this is same as:
+
+function makeExample(name, age) {
+    return {
+        name,
+        age,
+    };
+}
+
+can do
+
+function makeExample(name, age) {
+    return {
+        name,
+        age: age
+    };
+}
+
+property name/key
+------------------
+- can be any string,vraible name except __proto__ .Yes even reserved variable names can be used eg let,for 
+- if propert name is other type other than string it will be converted to a string type
+
+checking property existence?
+-----------------------------
+- (user.name===undefined) //evaluates to true if property does not exist otherwise false
+- fails to work if some reason you assign a property a value undefined
+- You can use {in} cause it works in all scenario
+- eg ("name" in user) or let key = "name"; (key in user)
+
+accessing properties
+-------------------
+
+for(let key in object){
+
+}
+
+-keys are ordered in creation tersm except if they include integer property names, which will be sorted;
+
+delete
+------
+delete obj.prop;
+
+MORE ON Objects
+-------------------
+- Unlike primitives, variable of objects store a reference to where the value is stored
+- if you copy a variable like you do for primitves , the new vraible will still be referncing the same object
+- you can do comparisons like == for objects(comparing objects to objects), but for other comparison types and values objects are converetd to primitives
+-clone an object? do manual way create new objects and then create proprties of from the object you are copying vua a loops
+- (shallow cloning)you also use Object.assign(dest,src1,src2);//copies properties that are in the sources to destination if they do not exist, otherwise overwrites
+- (deep cloing)for nested objects use eg let clone = structuredClone(user);
+- only type of object not supported is functions which you can clone using custome libaries
+
+
+Garbage collection
+--------------------
+- roots:  current functions running and its local vars and parameters, nested functions and its parameters and loc vars, global vars and internal variables
+- all objects that can reached from the roots are considered reachable, the others are considered unreachable
+- it not enough for a object to have an incoming reference, it must be reachable from to root to considered reachable
+- all OBJECTS BIT MARKED REACHABLE ARE AUTOMATICALL CLEANED BY THE GRABLE COLLECTOR
+- mark and sweep method used..
+
+
+
+----------------
+Objects and this
+----------------
+- Objects are used to represent entitites which do actions through methods(function belong to an object)
+-let user= {name: "Allan",}; , user.sayHi = function(){alert("Hi");}
+- let user= {name: "Allan", sayHi(){alert("Hi")}} , let user= {name: "Allan", sayHi: function(){alert("Hi")}}
+- this in javascript is used in a object context, when a method uses this, this will be object tthat calls the method
+- Eg user.hello() and function hello(){alert(this.name);} && user.hello = hello; then this wi;; be user object
+- this is evaluated at run time
+- this does not work for arrow functions; if used in this context it assume the object of the outer context
+- if this is used outside object context in modern sense it will be undefined and trying this.name will cause errors
+- in older times it could refer to window object in the browser
+- "use strict" for modern context to laways be applied
+
+-----------------------
+constructor functions
+-----------------------
+- Used for creation of objects, it enables you to create reusable object creation code
+- How is done?
+
+function User(name){this.name=name,this.admin=true;}
+let user1 = new User("Allan");
+
+convention - start with capital letter for function name , us new before calling function. any function can be made an object
+
+- to create a one time object, dont need code again to create other objects, do:
+
+let user1 = new function(){this.name="allan",..};
+
+function User(name){
+    alert(new.target)
+}
+
+this displays undefined if the funciton is called  without new otherwise it returns the function
+
+we could do
+
+function User(name){
+    if(!new.target){
+        return new User(name);
+    }
+    this.name=name;
+}
+
+this way you ca create an object with both let user1 = User("allan"); or let user1 = new User("james");
+if you return in constructor functions it will return value if it is an object other it will return this
+
+-------------------------
+optional chaining (?.)
+-----------------------
+let user = {}
+
+- user?.address -> returns undefined if user is udefined or null. user.?address?.street
+-Use it only for when you know the object/var is optional(peut-etre optional)
+-Only works for laready declared variables
+-It is not an operator. tis a special constructor
+- ?.() and ?.[] works
+eg let user = {
+    sayMyName(){
+        alert("alert");
+    }
+    age: 10,
+}
+user.sayMyName?.();
+user?.[age];
+
+-used to access nested obj safely
+-short circuits if obj on left being tested is null or undefined
+
+
+-------------------
+symbols
+-------------------
+- primitive unique identifier
+- gives you a unique value guaranteed
+
+eg let id1  = Symbol("id");  the "id" does not amtter as it just a description. Cannot be autoconvered to string as most other types
+-menas you cannot print it using alert, only thing to do is id1.toString(), or id1.description
+
+- help create hidden rpoperties of an object other parts of the code cannot accidentally access or overwrites
+
+let id1 = Symbol("id");
+let user = {name : "allan", [id1]: 124,};
+
+skipped by for ..in, also Object.keys(user), but presnt in clones orcombining info form other objects that may have it as we do in Object.assign()
+
+- if you want a description to give you same value/identifier use global registry by Symbol.for(key), to get the name you do Symbol.keyFor(key)
+- Other properties you can sue in Symbol.*
+
+---------------------------------
+object to primitive conversion
+---------------------------------
+- what happens when you do operations between objects? for example obj1  - obj2
+- In javascript, such operations can only yield primitives. You cant do them between objects
+- The objects will be converted to a primitive before the operations
+- In the example above the objects will be converted to a number type and then the operation. is done
+- How does javascirp do the conversions? it is through hints: "string","number","default"
+- When a operation expects a string - the objs will be converted to strings usually. When a number-  it will convert to number
+- If this function obj.[Symbol.toPrimitve](hint){}, exists it will be used
+- Otherwise obj.toString() or obj.valueOf()
+- For string hints - toString() is called first, if it returns an obj then valueOf() is called
+- for number -opposite of above
+- for default - treated like number above
+- teh conversion does gurantee the type will be same as the hint, what is assured is that it will be a primitive
+- you can implement this functions yourself to contol behavior 
+
+
+-------------------------
+primitive as an object
+-------------------------
+ - All primitive except null and undefined can be wrapped into objet=cst which we can use to access properties or functions
+ For example
+
+ let name = "allan";
+- alert(name.toUpperCase()) // javascript will wrap the string primitive to String object when try to access it properties then do the operataion and return primitve string ALLAN. Itts primitve is then destroyed
+- you could also do let name = String("name"); this works as well as String("allan") without new to convert to its object form but not recommend(both)
+
+
+
+
+--------
+numbers
+--------
+- .toString(base) returns string of the number represntation in thhe base sustem for the umber calling it
+- Math.ceil(..),.floor,.round..trunc
+-to rep hex 0xff, oct - 0o..,binary 0b..,
+- .toFixed(n) - round of to nearest n decimal places and reurns a string
+- wathc out for float opretaions becasue some of them can be accurately stord in memory eg 1/3(never ending dec places)
+- 1e3 =1000, 1e-3 = 1/10000
+- to use functs directly without var you use double dots eg 123456..toFixed(3)
+- isNaN(), isFinite() or Number.isNaN(), Number.isFinite()
+- parseInt(str,radix),parseFloat(str)
+- Math.random(), Math.max(), Math.min(), Math.pow()
+- Object.is(obj1,obj2) -uses strict equality
+- base 2<=base<=36
+
+
+------------
+strings
+------------
+ca -use ",',` . For multiline strings you can use backtick
+- special chars \n,\t
+- str.length
+- str[pos] or str.at(pos); .at() allows negative values eg -1, returns last element.[] method does not allow returns undefined
+- for(let char for "hello"){
+}
+- .toLowerCase(),.toUpperCase(),.indexOf(substr,[pos]),.lastIndexOf(substr,[pos]), .includes(substr,[pos]), .startsWith(substr), .endsWith(substr)
+
+substrings
+-----------
+.slice(start,[end]) - inclusive of start not end, allows negative avlues
+.substring(start,[end]) - same thing excpet you are allowed start bigger than end, which are then swapped, soe not allow negative values(neg values equals zero)
+.substr(start,length) -specify lengt, allows negative start
+
+compare
+---------
+ - use >,<,=== : done by comparing letter by letter using the numeric code from encoding scheme
+ - small letters have higher numeric code than capital letters thus will always be greater
+ - to get numeric vode str.codePointAt(pos),get char from code String.fromCodePoint(code)
+ - universal that works for diff languages str.localCompare(str2) if > positive number < negative number, == 0
+
+ .trim()
+ .repeat(n)
+
+
+-------------
+array
+------------
+- extension of an object therefore it an object, aims to store its elemnte in a contiguous memeory area
+- let names = []; or let names = new Array();
+- names.length,names[1] or names.at(pos)->allows megatives eg -1 returns last element
+- deque: to use as stack use .push(element) and .pop(), for queue use .shift() and .push(element). .unshift(element)->adds element at the beginning of the queue
+
+
+- .length property in incremented form the largest index assigned, you can modify it, easiest rest of array is array.length=0;
+- you cann access arrays like this for(let element of array){}, dont use for..in cause it will access extra porpoerties eg .length which we dont intend to, plus it is optimized for objects not arrays
+
+- let names = new Array("jAMES","bRANDON"); ALSO = new Array(2) - >will cerate an arry of length 2 but element will be undefined
+- they have toString method that return s a trong of csv.
+- to compare, loop over individual elements
+
+
+---------------
+array methods
+-----------------
+- arr.splice(start,[,deleteCount,replac1,re[lace2]]);
+- splice can do delete, insert and replace
+- example array:
+    let arr = [1,2,3,4,5];
+
+- arr.splice(0,2); result here will be arr now is [3,4,5], the opetion itself returns [1,2];
+- arr.splice(1,2,6,7); // arr is now [3,6,7], returns [4,5];
+- arr.splice(0,0,1,2); //arr is now [1,2,3,6,7]
+- splice accepts negative numbers
+
+-> arr.slice([start,end]); // same as string function but this one returns a subset of the array
+-> Example
+    let arr = [1,2,3,4,5];
+
+-> arr.slice(); //returns a copy of the array
+-> arr.slice(1,3); //this returns [2,3]
+-> arr.slice(2); this returns [3,4,5];
+-> slice also accepts negative numbers as indices
+
+concat
+-------
+-let arr = [1,2];
+-arr.concat([3,4],[5,6]); //returns new array [1,2,3,4,5,6]
+-arr.concat([3,4],5,6); //returns new array [1,2,3,4,5,6]
+-for objects it will add object as  whole unless it has the property [Symbol.isConcatSpreadable: true, ] 
+then it will the values with keys that are numeric when converted formstrings since property names in objects are strings
+
+forEach
+---------
+
+let arr = [1,2,3,4];
+
+arr.forEach(function(...,...,..){
+
+}); //the function passed detrmines what is done to every element in the array, whatever is returned from thrown always
+
+indexOf, lastIndexOf, .includes
+----------------------
+arr.indexOf(elem,start);, arr.largestindexOf(elem,start); //returns -1 if not found otherwise the pos
+arr.includes(elem); returns true or false
+
+find, findIndexOf, findLastIndexOf, filter
+--------------------------------------
+arr.find(function) - function will be used to find elemnet that return true in the function;
+
+eg  = arr.find(item => item.id==1); //will return item that matches that condition. the other two return indexs where the elements were found
+
+- filter is same as find but returns an array of all elements that match the condition not just the first
+
+
+
+
+-----------
+Transform
+-----------
+.map(func); ->returns an array of all transformed elements;
+.sort(comparison(func)) - sorts inplace and returns the reysult array also
+.reverse() - erverses in place and return.s result
+
+examples
+-------------
+ - const names = ["jared","allan","john","Michael"];
+
+- const results = names.map(item => item.length); // 5,5,4,7
+
+- alert(results);
+
+- names.sort( (a, b) => a.localeCompare(b));
+
+- alert(names);
+
+- results.sort( (a, b) => a - b );
+
+- alert(results);
+
+- results.sort( (a, b) => b - a );
+- alert(results);
+
+
+arr.split(delim,[length]),arr.join(delim);
+-------------------------------------------
+const nameString = names.join(' | ');
+alert(nameString);
+let nameArray = nameString.split(' | ');
+alert(nameArray);
+
+- split into letters is juts .split('');
+
+arr.reduce(function(accumulator,item,index,array),[initialValue])
+-------------------------------------------------------------------
+const arr = [1,2,3,4,5];
+const result = arr.reduce((sum,current) => current + sum,0);//15
+- recommended to pass initialValue to avoid errors incase of empty arrays
+.reduceRight(function(accumulator,item,index,array),[initialValue]), does samething but from right to left
+
+.isArray()
+-----------------
+- to check whether an object is an array, if you use typeof arr it will return object since arrays are objects
+
+thisArg
+----------
+USE BY METHODS THAT CALL FUNCs,exlucing,.sort();
+.map(func,thisArg)
+.filter(func,thisArg)
+.find(func,thisArg)
+...etc..
+
+let army = {
+  minAge: 18,
+  maxAge: 27,
+  canJoin(user) {
+    return user.age >= this.minAge && user.age < this.maxAge;
+  }
+};
+
+let users = [
+  {age: 16},
+  {age: 20},
+  {age: 23},
+  {age: 30}
+];
+
+// find users, for who army.canJoin returns true
+let soldiers = users.filter(army.canJoin, army);
+
+alert(soldiers.length); // 2
+alert(soldiers[0].age); // 20
+alert(soldiers[1].age); // 23
+
+-------------
+iterables
+--------------
+- Are objects that use fo..of to iterate over its elements
+-Examples are arrau and string
+- they implement [Symbol.iterator]() function
+- Objects that are not iterable, but looks like can be iterated over can be made iterable by implement the [Symbol.iterator]() function in it
+- Array like objects: have indexes and length property
+- to make objects behave like arrays so you can use its functionalits use Arry.from(obj,[mapfunction,thisArg])
+
+
+
+--------------
+Maps and sets
+--------------
+
+const students = new Map();
+
+students.set(0,"allan")
+        .set(1,"seth")
+        .set(2,"dillon");
+
+console.log(students.get(1));
+
+students.delete(1);
+
+console.log(students.has(1));
+
+for(let entry of students){
+
+    console.log(`Student ID: ${entry[0]}, Student Name: ${entry[1]}`);
+
+}
+
+for( let key of students.keys()){
+    console.log(key);
+}
+
+for( let value of students.values()){
+    console.log(value);
+}
+
+console.log(students.size)
+
+students.clear();
+console.log(students.size)
+
+
+//can create a map from a 2D array of key value pairs
+//eg
+
+let allan = [
+    ["name","doe"],
+    ["age", 100],
+    ["Occupation","developer"]
+];
+
+let mapa = new Map(allan);
+
+for(let entry of mapa){
+    console.log(entry);
+}
+
+// can also do it from objects
+
+let allanObj = {
+    "name":"john",
+    "age":101,
+    "occupation": "engineer"
+};
+
+//gives you a 2d array of key value pairs
+
+let map2 = new Map(Object.entries(allanObj));
+//let map2 = new Map(allanObj)
+
+console.log(map2);
+
+//can also create an object from 2d arry fo entries or ditectly from the map using Object.fromEntries() eg
+
+console.log(Object.fromEntries(map2));
+
+
+let guessWork = ["allan","james","richard","allan","hazard","richard"];
+
+const names = new Set(guessWork);
+
+console.log(names.size);
+
+names.add("hazard");
+
+names.delete("Richard");
+
+console.log(names.size);
+
+// also has names.has(..) , names.clear
+//iteration same as map except forEach.. study
+//names.entries(),names.keys(),names.value(); keys and .maps do sames thing of return value, all three are kpet for onpatability
+
+for(let value of names){
+    console.log(names);
+}
+
+
+
+----------------------
+weakmaps and weaksets
+-----------------------
+weakmaps - similar to maps except you only have to use obj as keys. the enrty form the obj is automatically removed by garabage coollector when the obj siezes to exist else where
+-limitation is you cant iterate over it so you cant cnat get current values. why? dont know when garbage collctor will remove said obj when its refreence/obj dies, upto cpu
+let wmap = new WeakMap();
+wmap.get(key)
+wmap.set(key,val)
+wmap.has(key)
+wmap.delete(key)
+
+weakset - same thing , in this instance elements have to ve oobjects
+
+let wkset = new WeakSet();
+wkset.add(obj)
+wkset.delete(obj)
+wkset.has(obj)
+
+
+Use cases?
+-  As secondary/additional data storage for objects we dont contol/own
+- can also be used for caching purposes
+
+
+----------------
+Object.keys(obj)- returns an array of keys
+Object.values(obj) - returns an array of values
+Object.entries(obj) - returns an array of [key,value] pairs
+Object.fromEntries(array)
